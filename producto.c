@@ -6,14 +6,17 @@ struct producto
 {
     char codigo[25];
     char nombreproducto[50];
-    char descproducto[50];
+    char marca[50];
     int cantidad;
     float preciocompra;
 };
 
 int main()
 {
-    printf("Bienvenido al registro de productos.");
+    printf("Bienvenido al registro de productos.\n");
+    FILE *registro;
+    struct producto n;
+
     do
     {
         printf("Por favor, elige una opcion a realizar.\n");
@@ -25,8 +28,7 @@ int main()
 
         if (opcion == 1)
         {
-            FILE *registro;
-            registro = fopen("archivo.txt", "w");
+            registro = fopen("archivo.txt", "a");
             if (registro == NULL)
             {
                 printf("Se ha producido un error al intentar abrir el archivo\n");
@@ -34,25 +36,34 @@ int main()
             }
 
             printf("Bienvenido al registro de los productos.\n");
-            printf("Por favor, inserta el nombre del producto\n");
+            printf("Por favor, inserta el codigo del producto: ");
+            scanf("%s", n.codigo);
+            printf("Por favor, inserta el nombre del producto: ");
+            scanf("%s", n.nombreproducto);
+            printf("Por favor, inserta la marca del producto: ");
+            scanf("%s", n.marca);
+            printf("Por favor, inserta la cantidad que hay del producto: ");
+            scanf("%d", &n.cantidad);
+            printf("Por favor, inserta el precio del producto: ");
+            scanf("%f", &n.preciocompra);
+            printf("Exito! El producto ha sido registrado.\n");
+            fprintf(registro, "%s\t%s\t%s\t%d\t%.2f\n", n.codigo, n.nombreproducto, n.marca, n.cantidad, n.preciocompra);
+            fclose(registro);
         }
         else if (opcion == 2)
         {
-            printf("Los productos que han sido registrados son: \n");
+            printf("Los productos ingresados son:\n");
         }
 
-        if (opcion != 1 && opcion != 2 && opcion!=3)
+        else if (opcion != 3)
         {
-            printf("No existe la opcion insertada. Por favor, vuelve a intentarlo.\n");
+            printf("Opcion no valida. Por favor, vuelve a intentarlo.\n");
             printf("\n");
         }
 
     } while (opcion != 3);
 
-    if (opcion == 3)
-    {
-        printf("Gracias por utilizar el programa.\n");
-    }
+    printf("Gracias por utilizar el programa.\n");
 
     return 0;
 }
